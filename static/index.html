@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#101412" />
+  <title>Lattice · 本地 Agentic RAG</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">L</span><div><strong>Lattice</strong><small>LOCAL AGENTIC RAG</small></div></div>
+      <button id="new-chat" class="new-chat">＋ 新建会话</button>
+      <div class="side-section"><div class="side-title"><span>知识库</span><span id="doc-count" class="count">0</span></div><div id="documents" class="documents"><p class="muted">正在读取文档…</p></div></div>
+      <div class="side-bottom"><div class="local-badge"><i></i> 数据仅保存在本机</div><button id="settings-open" class="settings-button">⚙ <span>模型设置</span><span>›</span></button></div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar"><div><span class="status-dot"></span><span>本地工作区</span><span class="divider">/</span><span id="mode-label">检索增强问答</span></div><button id="upload-top" class="button secondary">＋ 添加文档</button></header>
+      <section id="welcome" class="welcome">
+        <div class="hero-icon">⌁</div><p class="kicker">YOUR KNOWLEDGE, YOUR MACHINE</p><h1>与你的知识，<br><span>深入对话。</span></h1><p class="hero-copy">上传文档，提出问题。Agent 会自主规划、检索、反思，<br>并给出带有来源引用的回答。</p>
+        <button id="dropzone" class="dropzone"><span class="upload-icon">↑</span><strong>拖入文档，或点击上传</strong><small>支持 PDF、TXT、Markdown · 单文件最大 20 MB</small><input id="file-input" type="file" accept=".pdf,.txt,.md" hidden /></button>
+        <div class="features"><span><b>01</b> 本地存储</span><span><b>02</b> 多步检索</span><span><b>03</b> 来源可追溯</span></div>
+      </section>
+
+      <section id="conversation" class="conversation" hidden><div id="messages" class="messages"></div></section>
+      <div class="composer-wrap"><div id="upload-progress" class="upload-progress" hidden></div><form id="query-form" class="composer"><textarea id="question" rows="1" placeholder="向你的知识库提问…" aria-label="问题"></textarea><div class="composer-bottom"><span><kbd>Enter</kbd> 发送 · <kbd>Shift + Enter</kbd> 换行</span><button id="send" class="send" type="submit" aria-label="发送">↑</button></div></form><p class="disclaimer">回答由本地检索与模型生成，请核对引用来源。</p></div>
+    </main>
+
+    <aside id="inspector" class="inspector" hidden><div class="inspector-head"><div class="tabs"><button class="tab active" data-tab="sources">来源 <span id="source-count">0</span></button><button class="tab" data-tab="trace">Agent 轨迹</button></div></div><div id="sources-panel" class="inspector-content"></div><div id="trace-panel" class="inspector-content" hidden></div></aside>
+  </div>
+
+  <dialog id="settings-dialog"><form id="settings-form"><div class="dialog-head"><div><p class="kicker">LOCAL INFERENCE</p><h2>模型设置</h2></div><button type="button" id="settings-close" class="close">×</button></div><p class="muted">连接本机 Ollama。未启动模型服务时，系统自动使用抽取式回答。</p><label>Ollama 地址<input id="ollama-url" type="url" required placeholder="http://localhost:11434" /></label><label>模型名称<input id="model-name" type="text" required placeholder="qwen2.5:3b" /></label><div class="dialog-actions"><button type="button" id="settings-cancel" class="button secondary">取消</button><button class="button primary" type="submit">保存设置</button></div></form></dialog>
+  <div id="toast" class="toast" hidden></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>
